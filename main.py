@@ -11,13 +11,17 @@ def main():
 def adver():
     return render_template('advertisement.html')
 
-@app.route('/shops.html')
+@app.route('/shops')
 def shops():
     return render_template('shop.html')
 
 @app.route('/favour')
 def favour():
     return render_template('favourites.html')
+
+@app.route('/entrance')
+def entrance():
+    return render_template('enter.html')
 
 
 if __name__ == '__main__':
