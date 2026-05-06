@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- центральный блок -->
+        <div class="hero-content">
+            <h1>Покупай и продавай всё, что захочешь</h1>
+            <!-- для вида работы сайта -->
+            <div class="hero-sub">Более 10 миллионов объявлений. Безопасная сделка с гарантией доставки.</div>
+
+            <!-- строка поиска -->
+            <div class="search-big">
+                <span class="search-icon"><i class="fas fa-search"></i></span>
+                <input type="text" placeholder="Поиск по объявлениям: iPhone, кресло, велосипед..." aria-label="Поиск">
+                <button><i class="fas fa-arrow-right"></i> Найти</button>
+            </div>
+
+            <!-- популярные категории -->
+            <div class="categories-row">
+                <div class="cat-chip"><i class="fas fa-mobile-alt"></i> Электроника</div>
+                <div class="cat-chip"><i class="fas fa-tshirt"></i> Одежда</div>
+                <div class="cat-chip"><i class="fas fa-car"></i> Авто</div>
+                <div class="cat-chip"><i class="fas fa-home"></i> Недвижимость</div>
+                <div class="cat-chip"><i class="fas fa-couch"></i> Мебель</div>
+                <div class="cat-chip"><i class="fas fa-futbol"></i> Хобби</div>
+                <div class="cat-chip"><i class="fas fa-paw"></i> Животные</div>
+            </div>
+        </div>
+{% endblock %}
