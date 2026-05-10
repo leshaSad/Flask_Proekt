@@ -2,12 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Купи - продай</title>
-    <!-- Шрифты -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
-          rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoMarket — главная</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -17,15 +15,14 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafc;
-            color: #1f2937;
-            line-height: 1.5;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6edf8 100%);
+            min-height: 100vh;
         }
 
-        /* ========== ГЛАВНОЕ ОКНО В СТИЛЕ №1 (КЛАССИЧЕСКАЯ ДОСКА) ========== */
-        .hero-v1 {
+        /* ========== ГЛАВНОЕ ОКНО ========== */
+        .hero {
             background: linear-gradient(135deg, #ffffff 0%, #f4f7fe 100%);
-            padding: 3rem 2rem 4rem;
+            padding: 1rem 2rem 4rem;
             border-bottom: 1px solid #eef2f8;
         }
 
@@ -35,7 +32,7 @@
             padding: 0 20px;
         }
 
-        /* шапка / навигация (минимальная для полного base.html) */
+        /* ========== НАВИГАЦИЯ ========== */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -52,13 +49,10 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
 
         .logo i {
             background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
             color: #3b82f6;
             margin-right: 6px;
         }
@@ -74,66 +68,168 @@
             color: #334155;
             font-weight: 500;
             transition: 0.2s;
-            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
             color: #2563eb;
         }
 
-        .btn-outline-navy {
-            border: 1.5px solid #cbd5e1;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            background: white;
-            font-weight: 600;
+        /* ========== КНОПКА С ВЫПЛЫВАЮЩИМ СПИСКОМ ========== */
+        .dropdown {
+            position: relative;
+            display: inline-block;
         }
 
-        .btn-outline-navy:hover {
-            border-color: #3b82f6;
-            background: #f0f6ff;
-        }
-
-        .btn-primary-blue {
-            background: #3b82f6;
+        .dropdown-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
-            padding: 0.5rem 1.3rem;
-            border-radius: 40px;
             border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
             font-weight: 600;
-            transition: 0.2s;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
         }
 
-        .btn-primary-blue:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
+        .dropdown-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59,130,246,0.3);
         }
 
-        /* центральный контент героя */
+        .dropdown-btn i {
+            transition: transform 0.2s;
+        }
+
+        .dropdown.active .dropdown-btn i {
+            transform: rotate(180deg);
+        }
+
+        /* Выплывающее меню */
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            z-index: 1000;
+        }
+
+        .dropdown.active .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Меню для НЕ авторизованных */
+        .menu-header {
+            padding: 1rem;
+            border-bottom: 1px solid #eef2f8;
+            background: #f8fafc;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .menu-header p {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .menu-item {
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-decoration: none;
+            color: #1e293b;
+        }
+
+        .menu-item:hover {
+            background: #f1f5f9;
+        }
+
+        .menu-item i {
+            width: 24px;
+            color: #3b82f6;
+            font-size: 1.1rem;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: #eef2f8;
+            margin: 0.5rem 0;
+        }
+
+        /* Меню для авторизованных */
+        .user-info {
+            padding: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .user-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-email {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .logout-item {
+            color: #dc2626;
+        }
+
+        .logout-item i {
+            color: #dc2626;
+        }
+
+        /* Центральный контент */
         .hero-content {
             text-align: center;
-            max-width: 880px;
-            margin: 1rem auto 2rem auto;
+            max-width: 800px;
+            margin: 2rem auto;
         }
 
         .hero-content h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             font-weight: 800;
             background: linear-gradient(135deg, #0f172a, #2d4a82);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 1rem;
-            letter-spacing: -0.02em;
         }
 
-        .hero-sub {
+        .hero-content p {
             font-size: 1.2rem;
             color: #475569;
-            margin-bottom: 2rem;
         }
-
         /* поисковая строка */
         .search-big {
             background: white;
@@ -189,7 +285,6 @@
             background: #2563eb;
         }
 
-        /* категории */
         .categories-row {
             display: flex;
             flex-wrap: wrap;
@@ -225,227 +320,617 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.02);
         }
 
-        /* секция с преимуществами / быстрые ссылки */
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eef2f8;
+        /* Модальные окна (вход и регистрация) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.2s ease;
         }
 
-        .feature-item {
-            flex: 1;
-            min-width: 160px;
-            text-align: center;
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eef2f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #334155;
+        }
+
+        .form-group input {
+            width: 100%;
             padding: 0.8rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.8rem;
+            font-family: 'Inter', sans-serif;
         }
 
-        .feature-item i {
-            font-size: 1.8rem;
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .modal-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .modal-footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .modal-footer a {
             color: #3b82f6;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-item h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-        }
-
-        .feature-item p {
-            font-size: 0.8rem;
-            color: #5b6e8c;
-        }
-
-        /* подвал (минимальный) */
-        .footer {
-            background: #ffffff;
-            border-top: 1px solid #eef2f8;
-            padding: 2rem 0;
-            margin-top: 2rem;
-            color: #4b5563;
-        }
-
-        .footer-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1.5rem;
-        }
-
-        .footer-copyright {
-            font-size: 0.8rem;
-        }
-
-        .footer-links a {
             text-decoration: none;
-            color: #4b5563;
-            margin-left: 1.5rem;
-            font-size: 0.8rem;
+            cursor: pointer;
         }
 
-        .footer-links a:hover {
+        .error-msg {
+            color: #dc2626;
+            font-size: 0.7rem;
+            margin-top: 0.2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Карточки товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            background: #f1f5f9;
+            border-radius: 0.8rem;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #3b82f6;
+        }
+
+        .product-title {
+            font-weight: 700;
+            margin: 0.8rem 0 0.3rem;
+        }
+
+        .product-price {
             color: #2563eb;
+            font-weight: 800;
+            font-size: 1.2rem;
         }
 
-        @media (max-width: 780px) {
+        @media (max-width: 768px) {
             .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            .search-big {
-                flex-direction: column;
-                border-radius: 2rem;
-                background: white;
-            }
-            .search-big button {
-                width: 100%;
-                padding: 0.9rem;
-                border-radius: 3rem;
-                margin: 0.5rem;
-                width: calc(100% - 1rem);
-                justify-content: center;
-            }
-            .search-icon {
-                display: none;
+                font-size: 2rem;
             }
             .navbar {
                 flex-direction: column;
-                text-align: center;
-            }
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .footer-inner {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .footer-links a {
-                margin: 0 0.8rem;
-            }
-        }
-
-        /* анимация при загрузке: легкое появление */
-        .hero-v1, .navbar, .features {
-            animation: fadeUp 0.5s ease-out;
-        }
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
 
-<div class="hero-v1">
+<div class="hero">
     <div class="container">
-        <!-- навигация -->
+        <!-- Навигация -->
         <div class="navbar">
             <div class="logo">
-                <i class="fas fa-exchange-alt"></i> Купи - продай
+                <i class="fas fa-exchange-alt"></i> EchoMarket
             </div>
             <div class="nav-links">
-                <a href="{{ url_for('main') }}"><i class="fas fa-home"></i> Главная</a>
-                <a href="{{ url_for('adver') }}"><i class="fas fa-tag"></i> Объявления</a>
-                <a href="{{ url_for('shops') }}"><i class="fas fa-store"></i> Магазины</a>
-                <a href="{{ url_for('favour') }}"><i class="fas fa-heart"></i> Избранное</a>
-                <a href="{{ url_for('entrance') }}" class="btn-outline-navy"><i class="far fa-user-circle"></i> Войти</a>
-                <button class="btn-primary-blue"><i class="fas fa-plus-circle"></i> Продать</button>
+                <a href="#"><i class="fas fa-home"></i> Главная</a>
+                <a href="#"><i class="fas fa-tag"></i> Объявления</a>
+                <a href="#"><i class="fas fa-store"></i> Магазины</a>
+
+                <!-- ВЫПЛЫВАЮЩАЯ КНОПКА ВХОДА -->
+                <div class="dropdown" id="userDropdown">
+                    <button class="dropdown-btn" id="dropdownBtn">
+                        <i class="fas fa-user"></i>
+                        <span id="userBtnText">Войти</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <!-- Контент меню будет меняться в зависимости от авторизации -->
+                        <div id="menuContent"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <main role="main" class="container">
-            {% block content %}{% endblock %}
-        </main>
-        <!-- быстрые фичи / доверие -->
-        <div class="features">
-            <div class="feature-item">
-                <i class="fas fa-shield-alt"></i>
-                <h4>Безопасная сделка</h4>
-                <p>Защита покупателя и продавца</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-truck-fast"></i>
-                <h4>Доставка по всей РФ</h4>
-                <p>Сотни пунктов выдачи</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-comment-dots"></i>
-                <h4>Чат без посредников</h4>
-                <p>Договаривайтесь напрямую</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-gem"></i>
-                <h4>Проверка продавцов</h4>
-                <p>Рейтинг и отзывы</p>
+
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+
+<!-- Товары -->
+<div class="container">
+    <h2 style="margin: 2rem 0 1rem;"><i class="fas fa-fire" style="color: #f97316;"></i> Популярные объявления</h2>
+    <div class="products-grid" id="productsGrid">
+        <!-- Товары загрузятся через JS -->
+    </div>
+</div>
+
+<!-- ========== МОДАЛЬНОЕ ОКНО ВХОДА ========== -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-sign-in-alt"></i> Вход в аккаунт</h2>
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" placeholder="ivan@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Пароль</label>
+                    <input type="password" id="loginPassword" placeholder="••••••" required>
+                </div>
+                <div id="loginError" class="error-msg"></div>
+                <button type="submit" class="modal-btn">Войти</button>
+            </form>
+            <div class="modal-footer">
+                Нет аккаунта? <a onclick="openRegisterFromLogin()">Зарегистрироваться</a>
             </div>
         </div>
     </div>
 </div>
 
-<div class="footer">
-    <div class="footer-inner">
-        <div class="footer-copyright">
-            <i class="far fa-copyright"></i> 2026 Купи - продай - сайт для обмена, или продажи не нужных, или покупки нужных товаров.
+<!-- ========== МОДАЛЬНОЕ ОКНО РЕГИСТРАЦИИ ========== -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
+            <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
         </div>
-        <div class="footer-links">
-            <a href="#">О проекте</a>
-            <a href="#">Помощь</a>
-            <a href="#">Правила</a>
-            <a href="#">Безопасность</a>
-            <a href="#">Контакты</a>
+        <div class="modal-body">
+            <form id="registerForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Имя</label>
+                    <input type="text" id="regName" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="regEmail" placeholder="ivan@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Телефон</label>
+                    <input type="tel" id="regPhone" placeholder="+7 (999) 123-45-67">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Пароль</label>
+                    <input type="password" id="regPassword" placeholder="минимум 6 символов" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-check-circle"></i> Подтвердите пароль</label>
+                    <input type="password" id="regConfirmPassword" placeholder="повторите пароль" required>
+                </div>
+                <div id="registerError" class="error-msg"></div>
+                <button type="submit" class="modal-btn">Зарегистрироваться</button>
+            </form>
+            <div class="modal-footer">
+                Уже есть аккаунт? <a onclick="openLoginFromRegister()">Войти</a>
+            </div>
         </div>
     </div>
 </div>
-<!-- небольшой интерактив для имитации поиска / кнопок -->
+
 <script>
-    (function() {
-        // Эффект для поисковой строки - демо алерт
-        const searchBtn = document.querySelector('.search-big button');
-        const searchInput = document.querySelector('.search-big input');
-        if (searchBtn) {
-            searchBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                let query = searchInput ? searchInput.value.trim() : '';
-                if (query === '') {
-                    alert('🔎 Введите поисковый запрос (например, "iPhone" или "велосипед")');
-                } else {
-                    alert(`🔍 Поиск: "${query}" — демонстрация главного окна в стиле №2.`);
+    // ========== СОСТОЯНИЕ АВТОРИЗАЦИИ ==========
+    let isLoggedIn = false;
+    let currentUser = null;
+
+    // Сохранённые пользователи (имитация БД)
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // ========== ФУНКЦИИ ДЛЯ РАБОТЫ С ВЫПЛЫВАЮЩИМ МЕНЮ ==========
+    function updateDropdownMenu() {
+        const menuContent = document.getElementById('menuContent');
+        const userBtnText = document.getElementById('userBtnText');
+
+        if (isLoggedIn && currentUser) {
+            userBtnText.textContent = currentUser.name;
+
+            menuContent.innerHTML = `
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-name">${currentUser.name}</div>
+                    <div class="user-email">${currentUser.email}</div>
+                </div>
+                <div class="menu-item" onclick="viewProfile()">
+                    <i class="fas fa-id-card"></i>
+                    <span>Мой профиль</span>
+                </div>
+                <div class="menu-item" onclick="viewMyAds()">
+                    <i class="fas fa-list-ul"></i>
+                    <span>Мои объявления</span>
+                </div>
+                <div class="menu-item" onclick="createAd()">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Подать объявление</span>
+                </div>
+                <div class="menu-item" onclick="viewFavorites()">
+                    <i class="fas fa-heart"></i>
+                    <span>Избранное</span>
+                </div>
+                <div class="menu-divider"></div>
+                <div class="menu-item logout-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выйти</span>
+                </div>
+            `;
+        } else {
+            userBtnText.textContent = 'Войти';
+
+            menuContent.innerHTML = `
+                <div class="menu-header">
+                    <p>Войдите в аккаунт, чтобы продавать и покупать</p>
+                </div>
+                <div class="menu-item" onclick="openLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Войти</span>
+                </div>
+                <div class="menu-item" onclick="openRegisterModal()">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Зарегистрироваться</span>
+                </div>
+                <div class="menu-divider"></div>
+                <div class="menu-item" onclick="showToast('Гостевой режим: вы можете просматривать объявления', 'success')">
+                    <i class="fas fa-eye"></i>
+                    <span>Продолжить как гость</span>
+                </div>
+            `;
+        }
+    }
+
+    // ========== УПРАВЛЕНИЕ ВЫПАДАЮЩИМ СПИСКОМ ==========
+    const dropdown = document.getElementById('userDropdown');
+    const dropdownBtn = document.getElementById('dropdownBtn');
+
+    dropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('active');
+    });
+
+    // Закрытие при клике вне меню
+    document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // ========== МОДАЛЬНЫЕ ОКНА ==========
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+        dropdown.classList.remove('active');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    function openLoginModal() {
+        openModal('loginModal');
+    }
+
+    function openRegisterModal() {
+        openModal('registerModal');
+    }
+
+    function openLoginFromRegister() {
+        closeModal('registerModal');
+        openLoginModal();
+    }
+
+    function openRegisterFromLogin() {
+        closeModal('loginModal');
+        openRegisterModal();
+    }
+
+    // ========== ФУНКЦИИ АВТОРИЗАЦИИ ==========
+    function login(email, password) {
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+            isLoggedIn = true;
+            currentUser = { name: user.name, email: user.email, phone: user.phone };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateDropdownMenu();
+            closeModal('loginModal');
+            showToast(`Добро пожаловать, ${user.name}!`, 'success');
+            return true;
+        } else {
+            document.getElementById('loginError').innerHTML = 'Неверный email или пароль';
+            return false;
+        }
+    }
+
+    function register(name, email, phone, password, confirmPassword) {
+        // Валидация
+        if (name.length < 2) {
+            document.getElementById('registerError').innerHTML = 'Имя должно содержать минимум 2 символа';
+            return false;
+        }
+        if (!email.includes('@')) {
+            document.getElementById('registerError').innerHTML = 'Введите корректный email';
+            return false;
+        }
+        if (password.length < 6) {
+            document.getElementById('registerError').innerHTML = 'Пароль должен содержать минимум 6 символов';
+            return false;
+        }
+        if (password !== confirmPassword) {
+            document.getElementById('registerError').innerHTML = 'Пароли не совпадают';
+            return false;
+        }
+        if (users.find(u => u.email === email)) {
+            document.getElementById('registerError').innerHTML = 'Пользователь с таким email уже существует';
+            return false;
+        }
+
+        // Регистрация
+        const newUser = { name, email, phone, password };
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+
+        // Автоматический вход
+        isLoggedIn = true;
+        currentUser = { name, email, phone };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        updateDropdownMenu();
+        closeModal('registerModal');
+        showToast(`Добро пожаловать, ${name}!`, 'success');
+        return true;
+    }
+
+    function logout() {
+        isLoggedIn = false;
+        currentUser = null;
+        localStorage.removeItem('currentUser');
+        updateDropdownMenu();
+        showToast('Вы вышли из аккаунта', 'success');
+        dropdown.classList.remove('active');
+    }
+
+    // ========== ДЕЙСТВИЯ В МЕНЮ ==========
+    function viewProfile() {
+        showToast(`Профиль пользователя: ${currentUser.name}`, 'success');
+        dropdown.classList.remove('active');
+    }
+
+    function viewMyAds() {
+        showToast('Ваши объявления (в разработке)', 'info');
+        dropdown.classList.remove('active');
+    }
+
+    function createAd() {
+        showToast('Форма создания объявления откроется скоро', 'info');
+        dropdown.classList.remove('active');
+    }
+
+    function viewFavorites() {
+        showToast('Избранное (в разработке)', 'info');
+        dropdown.classList.remove('active');
+    }
+
+    // ========== ТОСТ-УВЕДОМЛЕНИЯ ==========
+    function showToast(message, type = 'success') {
+        const existingToast = document.querySelector('.toast-message');
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement('div');
+        toast.className = `toast-message ${type}`;
+        const icon = type === 'success' ? 'fa-check-circle' : (type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle');
+        toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#10b981' : (type === 'error' ? '#ef4444' : '#3b82f6')};
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        `;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    // Добавляем стиль для анимации тоста
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // ========== ОБРАБОТЧИКИ ФОРМ ==========
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        login(email, password);
+        document.getElementById('loginForm').reset();
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('regPhone').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+        register(name, email, phone, password, confirmPassword);
+        document.getElementById('registerForm').reset();
+    });
+
+    // ========== ЗАГРУЗКА ТОВАРОВ ==========
+    const products = [
+        { id: 1, name: 'iPhone 14 Pro', price: '75 000 ₽', icon: 'fa-mobile-alt', color: '#3b82f6' },
+        { id: 2, name: 'Кожаная куртка', price: '12 500 ₽', icon: 'fa-tshirt', color: '#e67e22' },
+        { id: 3, name: 'Горный велосипед', price: '28 000 ₽', icon: 'fa-bicycle', color: '#16a34a' },
+        { id: 4, name: 'MacBook Air M2', price: '110 000 ₽', icon: 'fa-laptop', color: '#8b5cf6' },
+        { id: 5, name: 'Наушники Sony', price: '15 000 ₽', icon: 'fa-headphones', color: '#ec489a' },
+        { id: 6, name: 'Диван угловой', price: '45 000 ₽', icon: 'fa-couch', color: '#d97706' }
+    ];
+
+    function loadProducts() {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = products.map(product => `
+            <div class="product-card">
+                <div class="product-image" style="background: ${product.color}10;">
+                    <i class="fas ${product.icon}" style="color: ${product.color}; font-size: 3rem;"></i>
+                </div>
+                <div class="product-title">${product.name}</div>
+                <div class="product-price">${product.price}</div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #64748b;">
+                    <i class="fas fa-map-marker-alt"></i> Москва
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ========== ИНИЦИАЛИЗАЦИЯ ==========
+    function init() {
+        // Загружаем сохранённого пользователя
+        const savedUser = localStorage.getItem('currentUser');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            isLoggedIn = true;
+        }
+        updateDropdownMenu();
+        loadProducts();
+
+        // Закрытие модального окна по ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
+
+        // Закрытие по клику на фон
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
                 }
             });
-        }
-        // Кнопка "Подать" / Войти (имитация)
-        const publishBtn = document.querySelector('.btn-primary-blue');
-        if (publishBtn) {
-            publishBtn.addEventListener('click', () => {
-                alert('📢 Форма подачи объявления откроется здесь (демо-режим)');
-            });
-        }
-        // Категории кликабельны (просто демо)
-        const chips = document.querySelectorAll('.cat-chip');
-        chips.forEach(chip => {
-            chip.addEventListener('click', () => {
-                let catText = chip.innerText.trim();
-                alert(`🏷️ Категория: ${catText} — показать все объявления (демо)`);
-            });
         });
-        // hover-эффекты также через css выполнены
-        console.log('base.html (стиль 1 — классическая доска) загружен и готов');
-    })();
-</script>
+    }
 
+    init();
+</script>
 </body>
 </html>

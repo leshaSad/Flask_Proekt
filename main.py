@@ -3,9 +3,12 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def main():
-    return render_template('main.html')
+    if request.method == 'GET':
+        return render_template('main.html')
+    elif request.method == 'POST':
+        print(request.form)
 
 @app.route('/advertisement')
 def adver():
@@ -25,4 +28,4 @@ def entrance():
 
 
 if __name__ == '__main__':
-    app.run(port=777, host='127.7.7.7')
+    app.run(port=7777, host='127.7.7.7')
